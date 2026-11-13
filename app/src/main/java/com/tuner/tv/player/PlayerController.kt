@@ -80,7 +80,7 @@ class PlayerController(private val context: Context) {
         recording = null
         channel = c
         error = null
-        setMuted(mute)
+        this.mute(mute)
         player.setMediaItem(liveItem(c.url, forceHls = false))
         player.prepare()
         player.playWhenReady = true
@@ -90,7 +90,7 @@ class PlayerController(private val context: Context) {
         channel = null
         recording = file
         error = null
-        setMuted(false)
+        mute(false)
         val item = MediaItem.fromUri(file.uri)
         if (file.uri.scheme == "smb" && nas != null) {
             player.setMediaSource(ProgressiveMediaSource.Factory(SmbDataSource.Factory(nas)).createMediaSource(item))
@@ -101,7 +101,7 @@ class PlayerController(private val context: Context) {
         player.playWhenReady = true
     }
 
-    fun setMuted(m: Boolean) {
+    fun mute(m: Boolean) {
         muted = m
         player.volume = if (m) 0f else 1f
     }

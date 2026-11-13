@@ -111,7 +111,7 @@ fun TunerApp(vm: MainViewModel = viewModel()) {
 
     fun watch(list: List<Channel>, index: Int) {
         val c = list[index]
-        if (controller.channel?.id != c.id) controller.tune(c, mute = false) else controller.setMuted(false)
+        if (controller.channel?.id != c.id) controller.tune(c, mute = false) else controller.mute(false)
         vm.settings.lastChannelId = c.id
         screen = Screen.Live(list, index)
     }
@@ -199,7 +199,7 @@ fun TunerApp(vm: MainViewModel = viewModel()) {
                     active = active,
                     onExit = { c ->
                         focusChannelId = c.id
-                        controller.setMuted(true)
+                        controller.mute(true)
                         screen = Screen.Browse
                     },
                     onToast = { toast = it },
