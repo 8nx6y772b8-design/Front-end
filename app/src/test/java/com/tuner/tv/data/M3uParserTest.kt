@@ -6,7 +6,7 @@ import org.junit.Test
 
 class M3uParserTest {
 
-    private fun parse(s: String) = M3uParser.parse(s.lineSequence())
+    private fun parse(s: String) = M3uParser.parse(s.lineSequence()).channels
 
     @Test
     fun parsesStandardEntries() {
@@ -58,5 +58,18 @@ class M3uParserTest {
     fun fallsBackToTvgNameWhenDisplayNameMissing() {
         val list = parse("#EXTINF:-1 tvg-name=\"Backup Name\",\nhttp://x/y")
         assertEquals("Backup Name", list[0].name)
+    }
+
+    @Test
+    fun readsGuideLinkFromHeader() {
+        val pl = M3uParser.parse("#EXTM3U url-tvg=\"http://g/one.xml,http://g/two.xml\"\n#EXTINF:-1,A\nhttp://x/a".lineSequence())
+        assertEquals("http://g/one.xml", pl.epgUrl)
+    }
+
+    @Test
+    fun normalisesNamesForGuideMatching() {
+        assertEquals("tvnz1", normaliseName("TVNZ 1 HD"))
+        assertEquals("sportone", normaliseName("Sport-One FHD"))
+        assertEquals("hd", normaliseName("HD"))
     }
 }

@@ -2,7 +2,7 @@
 
 An IPTV front end for Fire TV and Android TV, in the style of TiviMate. You give it your M3U playlist; it gives you a remote-friendly channel browser and a fast live player.
 
-**Status:** v0.1. Playlist loading, channel groups, logos and a full-screen player with channel zapping. The TV guide (EPG) is next.
+**Status:** v0.2. New design with live preview, M3U or Xtream login, TV guide, and recording to a network drive (record now, timed, from the guide) with playback.
 
 ## Install on a Fire TV Stick
 
@@ -27,6 +27,9 @@ Updates install over the top, because every build is signed with the same key in
 | Player | Centre, Left, Right | Show / hide the channel banner |
 | Player | Play/Pause | Pause / resume |
 | Player | Back | Back to the list, on the channel you were watching |
+| Player | Menu ≡ | Record now / record this programme / schedule |
+| Guide | OK | Watch (on now) or record (later) |
+| Recordings | Menu ≡ | Play / delete / cancel |
 
 ## Building
 
@@ -37,9 +40,10 @@ Stack: Kotlin, Jetpack Compose for TV (`androidx.tv:tv-material`), Media3 ExoPla
 
 ## Roadmap
 
-- [ ] EPG: XMLTV download, streaming parser, Room database, now/next on the banner
-- [ ] TV guide grid (the TiviMate-style timeline)
+- [x] EPG: XMLTV download, streaming parser, SQLite, now/next on the banner
+- [x] TV guide grid (timeline) with record-from-guide
+- [x] Xtream Codes login (server + username + password)
+- [x] Recording to a network drive (SMB): record now, timed, from the guide, playback
 - [ ] Favourites and recently watched
-- [ ] Xtream Codes login (server + username + password instead of a long URL)
 - [ ] Enter the playlist from your phone (QR code / local web page) instead of typing on the TV
 - [ ] Catch-up, number-key channel entry, auto-play last channel on start
