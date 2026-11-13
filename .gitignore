@@ -1,0 +1,10 @@
+.gradle/
+build/
+local.properties
+.idea/
+*.iml
+.DS_Store
+captures/
+.kotlin/
+# app/debug.keystore is committed on purpose: every build is signed with the
+# same key, so updates install over the top without uninstalling first.

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 320x180 home-screen banner for Fire TV / Android TV -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="320dp"
+    android:height="180dp"
+    android:viewportWidth="320"
+    android:viewportHeight="180">
+    <path android:fillColor="#FF0B0F14" android:pathData="M0,0h320v180h-320z" />
+    <path android:fillColor="#FF2DD4BF" android:pathData="M40,50h90a8,8 0,0 1,8 8v54a8,8 0,0 1,-8 8h-90a8,8 0,0 1,-8 -8v-54a8,8 0,0 1,8 -8z" />
+    <path android:fillColor="#FF0B0F14" android:pathData="M74,68l26,17 -26,17z" />
+    <!-- guide rows -->
+    <path android:fillColor="#FF2DD4BF" android:pathData="M160,56h60v12h-60z" />
+    <path android:fillColor="#FF1F6F66" android:pathData="M226,56h60v12h-60z" />
+    <path android:fillColor="#FF1F6F66" android:pathData="M160,79h40v12h-40z" />
+    <path android:fillColor="#FF2DD4BF" android:pathData="M206,79h80v12h-80z" />
+    <path android:fillColor="#FF1F6F66" android:pathData="M160,102h86v12h-86z" />
+    <path android:fillColor="#FF1F6F66" android:pathData="M252,102h34v12h-34z" />
+</vector>
