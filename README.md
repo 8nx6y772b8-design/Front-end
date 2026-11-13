@@ -43,6 +43,7 @@ Stack: Kotlin, Jetpack Compose for TV (`androidx.tv:tv-material`), Media3 ExoPla
 - [x] EPG: XMLTV download, streaming parser, SQLite, now/next on the banner
 - [x] TV guide grid (timeline) with record-from-guide
 - [x] Xtream Codes login (server + username + password)
+- [x] Xtream: pick which live TV categories to download, fetched one category at a time (keeps big playlists within Fire Stick memory)
 - [x] Recording to a network drive (SMB): record now, timed, from the guide, playback
 - [ ] Favourites and recently watched
 - [ ] Enter the playlist from your phone (QR code / local web page) instead of typing on the TV
