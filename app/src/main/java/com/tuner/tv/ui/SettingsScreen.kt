@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -80,7 +82,7 @@ fun SettingsScreen(
         Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(20.dp)) {
             // ---------------- playlist
             Glass(Modifier.weight(1f).fillMaxHeight()) {
-                Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     SectionTitle("Playlist")
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         listOf(Settings.SOURCE_M3U to "M3U link", Settings.SOURCE_XTREAM to "Xtream login").forEachIndexed { i, (k, label) ->
@@ -114,13 +116,13 @@ fun SettingsScreen(
                             PrimaryButton("Back", onBack, primary = false)
                         }
                     }
-                    sourceMsg?.let { Text(it, fontSize = 12.sp, color = ErrorRed) }
+                    sourceMsg?.let { Text(it, fontSize = 12.sp, color = ErrorRed, lineHeight = 16.sp) }
                 }
             }
 
             // ---------------- recordings
             Glass(Modifier.weight(1f).fillMaxHeight()) {
-                Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     SectionTitle("Recordings · network drive")
                     Text(
                         "Recordings save as video files in a shared folder on your network drive (SMB). Leave the folder blank to record onto the Fire Stick instead (limited space).",
@@ -147,7 +149,7 @@ fun SettingsScreen(
                         })
                     }
                     nasMsg?.let { Text(it, fontSize = 12.sp, color = if (it.startsWith("Connected")) Teal else ErrorRed, lineHeight = 17.sp) }
-                    Spacer(Modifier.weight(1f))
+                    Spacer(Modifier.height(6.dp))
                     Text("Currently saving to: ${vm.storageLabel}", fontSize = 11.5.sp, color = Dim)
                     Text("Tip: find the folder on a Mac in Finder → Network, or on Windows in File Explorer → Network.", fontSize = 11.5.sp, color = Dim)
                 }

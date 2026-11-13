@@ -381,7 +381,7 @@ fun TvField(
     if (!editing) {
         FocusRow(
             onClick = { editing = true },
-            height = 54.dp,
+            height = 50.dp,
             zoom = 1.015f,
             modifier = modifier.fillMaxWidth().focusRequester(rowFocus).border(1.dp, GlassLine, RoundedCornerShape(12.dp)),
         ) {
@@ -416,8 +416,8 @@ fun TvField(
             },
             decorationBox = { inner ->
                 Column(
-                    Modifier.fillMaxWidth().height(54.dp).clip(RoundedCornerShape(12.dp)).background(Color(0x40000000))
-                        .border(2.dp, Teal, RoundedCornerShape(12.dp)).padding(horizontal = 12.dp, vertical = 7.dp)
+                    Modifier.fillMaxWidth().height(50.dp).clip(RoundedCornerShape(12.dp)).background(Color(0x40000000))
+                        .border(2.dp, Teal, RoundedCornerShape(12.dp)).padding(horizontal = 12.dp, vertical = 5.dp)
                 ) {
                     Text(label, fontSize = 10.5.sp, color = Teal)
                     Box(Modifier.fillMaxWidth()) { inner() }
