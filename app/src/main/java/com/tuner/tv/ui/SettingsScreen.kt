@@ -116,6 +116,9 @@ fun SettingsScreen(
                             PrimaryButton("Back", onBack, primary = false)
                         }
                     }
+                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                        PrimaryButton("Try demo channels", { vm.loadDemo(); onSaved() }, primary = false)
+                    }
                     sourceMsg?.let { Text(it, fontSize = 12.sp, color = ErrorRed, lineHeight = 16.sp) }
                 }
             }

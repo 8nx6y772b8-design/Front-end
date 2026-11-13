@@ -127,7 +127,7 @@ fun TunerApp(vm: MainViewModel = viewModel()) {
 
         CompositionLocalProvider(LocalContentColor provides Ink) {
             when {
-                state is UiState.Loading -> CenterMessage("Loading your channels…", spinner = true)
+                state is UiState.Loading -> LoadingScreen(vm.loadingText, onCancel = vm::cancelLoad)
 
                 state is UiState.NeedsSetup || screen == Screen.Settings -> SettingsScreen(
                     vm = vm,
@@ -287,6 +287,21 @@ fun CenterMessage(text: String, spinner: Boolean = false) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(18.dp)) {
             if (spinner) Spinner(48.dp)
             Text(text, color = Muted, fontSize = 18.sp)
+        }
+    }
+}
+
+@Composable
+private fun LoadingScreen(text: String, onCancel: () -> Unit) {
+    val focus = remember { FocusRequester() }
+    LaunchedEffect(Unit) { focusSoon(focus) }
+    androidx.activity.compose.BackHandler(onBack = onCancel)
+    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            Spinner(48.dp)
+            Text(text, color = Ink, fontSize = 18.sp)
+            Text("Big playlists can take a minute on a Fire Stick.", color = Dim, fontSize = 12.sp)
+            PrimaryButton("Cancel", onCancel, Modifier.focusRequester(focus), primary = false)
         }
     }
 }

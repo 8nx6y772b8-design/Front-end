@@ -21,7 +21,9 @@ import com.tuner.tv.rec.RecordingStorage
 import com.tuner.tv.rec.Schedule
 import com.tuner.tv.rec.ScheduleStore
 import com.tuner.tv.rec.SmbSession
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -36,6 +38,9 @@ data class Group(val name: String, val channels: List<Channel>)
 
 const val ALL_CHANNELS = "All channels"
 
+/** Public test streams, kept in the repo, for checking the app works on a device. */
+const val DEMO_PLAYLIST_URL = "https://raw.githubusercontent.com/8nx6y772b8-design/Front-end/main/demo.m3u"
+
 class MainViewModel(private val app: Application) : AndroidViewModel(app) {
 
     val settings = Settings(app)
@@ -45,6 +50,9 @@ class MainViewModel(private val app: Application) : AndroidViewModel(app) {
 
     var state by mutableStateOf<UiState>(UiState.Loading)
         private set
+    var loadingText by mutableStateOf("Loading your channels…")
+        private set
+    private var loadJob: Job? = null
 
     /** Bumped whenever the guide data changes, so screens re-read it. */
     var epgVersion by mutableIntStateOf(0)
@@ -71,15 +79,19 @@ class MainViewModel(private val app: Application) : AndroidViewModel(app) {
     // ------------------------------------------------------------ playlist
 
     fun load(forceRefresh: Boolean) {
+        loadJob?.cancel()
         state = UiState.Loading
-        viewModelScope.launch {
+        loadingText = "Loading your channels…"
+        loadJob = viewModelScope.launch {
             state = try {
-                val pl = playlists.load(forceRefresh)
+                val pl = playlists.load(forceRefresh) { text -> viewModelScope.launch { loadingText = text } }
                 if (pl.channels.isEmpty()) {
                     UiState.Error("No channels found. Check the playlist link or login details.")
                 } else {
                     UiState.Ready(pl, buildGroups(pl.channels))
                 }
+            } catch (e: CancellationException) {
+                throw e
             } catch (e: Exception) {
                 UiState.Error("Couldn't load the playlist: ${e.message ?: e.javaClass.simpleName}")
             }
@@ -88,6 +100,20 @@ class MainViewModel(private val app: Application) : AndroidViewModel(app) {
                 refreshRecordings()
             }
         }
+    }
+
+    fun cancelLoad() {
+        loadJob?.cancel()
+        loadJob = null
+        state = UiState.Error("Loading was cancelled. Check the playlist details in Settings, or try the demo channels to check the app is working.")
+    }
+
+    fun loadDemo() {
+        settings.sourceType = Settings.SOURCE_M3U
+        settings.m3uUrl = DEMO_PLAYLIST_URL
+        settings.epgLastRefresh = 0
+        playlists.clearCache()
+        load(forceRefresh = true)
     }
 
     fun saveSource(type: String, m3u: String, server: String, user: String, pass: String, epgUrl: String) {
